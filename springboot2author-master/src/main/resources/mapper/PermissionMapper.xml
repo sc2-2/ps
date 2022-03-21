@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 指明当前xml对应的Mapper -->
+<mapper namespace="com.example.demo.mapper.PermissionMapper">
+    <!-- 多表查询,Select 的as后面的名称必须与UserVO属性名大小写一致  -->
+    <select id="selectPermissionListPage" parameterType="com.example.demo.vo.PermissionVO" resultType="com.example.demo.vo.PermissionVO">
+        SELECT
+            p.id as id,
+            p.name as name,
+            p.descripion as descripion,
+            p.url as url,
+            p.pid as pid,
+            p.perms as perms,
+            p.type as type,
+            p.icon as icon,
+            p.order_num as order_num
+        FROM
+            t_sys_permission p
+        WHERE 1=1
+        <if test="name != null">
+            and p.name like  concat('%',#{name},'%')
+        </if>
+        <if test="url != null">
+            and p.url like  concat('%',#{url},'%')
+        </if>
+    </select>
+    <select id="selectUserPermissionList" parameterType="String" resultType="com.example.demo.vo.PermissionVO">
+        SELECT
+			pr.sys_permission_id as id
+		FROM
+			t_sys_user u
+		INNER JOIN t_sys_role_user ru ON u.id = ru.sys_user_id
+		INNER JOIN t_sys_permission_role pr ON ru.sys_role_id = pr.sys_role_id
+        WHERE        
+            u.id = #{userid}
+    </select>
+    
+</mapper>

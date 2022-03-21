@@ -1,0 +1,2 @@
+# springboot2author
+采用Spring Boot2.0框架结合Jquery和Bootstrap前端技术项目来实现通用授权模块，面向实训教学

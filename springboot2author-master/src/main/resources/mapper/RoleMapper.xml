@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 指明当前xml对应的Mapper -->
+<mapper namespace="com.example.demo.mapper.RoleMapper">
+    <!-- 多表查询,Select 的as后面的名称必须与RoleVO属性名大小写一致  -->
+    <select id="selectRoleListPage" parameterType="com.example.demo.vo.RoleVO" resultType="com.example.demo.vo.RoleVO">
+        SELECT
+            r.id as id,
+            r.name as name
+        FROM
+            t_sys_role r
+        WHERE 1=1
+        <if test="name != null">
+            and r.name like  concat('%',#{name},'%')
+        </if>       
+    </select>     
+</mapper>
